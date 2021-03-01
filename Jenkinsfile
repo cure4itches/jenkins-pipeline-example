@@ -10,6 +10,7 @@ node {
         echo 'Good to see you!'
     }
     stage('Flow Control') {
+        sh 'printenv'
         if (env.BRANCH_NAME == 'main') {
             echo 'I only execute on the main branch'
         } else {
