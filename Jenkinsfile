@@ -9,7 +9,7 @@ node {
     stage('Stage 3') {
         echo 'Good to see you!'
     }
-    stage('Flow Control') {}
+    stage('Flow Control') {
         if (env.BRANCH_NAME == 'main') {
             echo 'I only execute on the main branch'
         } else {
