@@ -1,27 +1,28 @@
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            containerTemplate {
+                name 'maven'
+                image 'maven:alpine'
+                ttyEnabled true
+                command 'cat'
+            }
+            containerTemplate {
+                name 'busybox'
+                image 'busybox'
+                ttyEnabled true
+                command 'cat'
+            }
+        }
+    }
     stages {
-        stage('Stage 1') {
+        stage('Run maven') {
             steps {
-                script {
-                    echo 'Hello'
+                container('maven') {
+                    sh 'mvn -version'
                 }
-            }
-        }
-
-        stage('Stage 2') {
-            steps {
-                script {
-                    echo 'World'
-                    sh 'sleep 5'
-                }
-            }
-        }
-
-        stage('Stage 3') {
-            steps {
-                script {
-                    echo 'Good to see you!'
+                container('busybox') {
+                    sh '/bin/busybox'
                 }
             }
         }
